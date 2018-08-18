@@ -23,7 +23,7 @@ class AuthFilter(val jwtService: JwtService) : HandlerInterceptor {
             jwtService.getJwtClaims(authorizationHeader)
             true
         } catch (e: JwtException) {
-            log.warn(e.message, e)
+            log.warn(e.message)
             response.status = HttpStatus.UNAUTHORIZED.value()
             false
         }

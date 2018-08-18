@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlinVersion = '1.2.51'
+        kotlinVersion = '1.2.60'
         springBootVersion = '2.0.4.RELEASE'
     }
     repositories {
@@ -57,6 +57,7 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test') {
         exclude module: 'junit'
     }
+    testCompile("org.jetbrains.kotlin:kotlin-test")
     testCompile('org.springframework.security:spring-security-test')
     testImplementation('org.junit.jupiter:junit-jupiter-api')
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')

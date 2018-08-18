@@ -6,12 +6,13 @@ import com.demo.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 class UserController(val userService: UserService, val jwtService: JwtService) {
 
     @PostMapping("/sign-up")
-    fun signUp(@RequestBody user: User): ResponseEntity<Any> {
+    fun signUp(@Valid @RequestBody user: User): ResponseEntity<Any> {
         return if (userService.findByEmail(user.email).isPresent)
             ResponseEntity("User already exists", HttpStatus.CONFLICT)
         else
@@ -19,7 +20,7 @@ class UserController(val userService: UserService, val jwtService: JwtService) {
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody user: User): ResponseEntity<Any> {
+    fun login(@Valid @RequestBody user: User): ResponseEntity<Any> {
         return if (userService.findByEmailAndPassword(user.email, user.password).isPresent)
             ResponseEntity.ok(jwtService.create(user))
         else
