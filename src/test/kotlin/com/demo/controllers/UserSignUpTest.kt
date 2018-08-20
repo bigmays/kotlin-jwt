@@ -1,9 +1,9 @@
-package com.demo.controller
+package com.demo.controllers
 
 import com.demo.config.WebConfig
 import com.demo.domain.User
-import com.demo.service.JwtService
-import com.demo.service.UserService
+import com.demo.services.JwtService
+import com.demo.services.UserService
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.given
@@ -35,7 +35,7 @@ internal class UserSignUpTest {
         val builder = signUpRequestBuilder()
                 .content("{\"email\": \"test@gmail.com\", \"password\":\"123123\"}")
 
-        this.mockMvc.perform(builder).andExpect(status().isOk)
+        mockMvc.perform(builder).andExpect(status().isOk)
     }
 
     @Test
@@ -46,8 +46,7 @@ internal class UserSignUpTest {
         given(this.userService.findByEmail("test@gmail.com"))
                 .willReturn(Optional.of(User("test@gmail.com", "123123")))
 
-        this.mockMvc.perform(builder).andExpect(status().isConflict)
-
+        mockMvc.perform(builder).andExpect(status().isConflict)
     }
 
     @Test
@@ -55,8 +54,7 @@ internal class UserSignUpTest {
         val builder = signUpRequestBuilder()
                 .content("{\"email\": \"test\", \"password\":\"123123\"}")
 
-        this.mockMvc.perform(builder).andExpect(status().isBadRequest)
-
+        mockMvc.perform(builder).andExpect(status().isBadRequest)
     }
 
     private fun signUpRequestBuilder(): MockHttpServletRequestBuilder {

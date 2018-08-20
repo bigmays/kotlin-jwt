@@ -1,8 +1,8 @@
-package com.demo.controller
+package com.demo.controllers
 
-import com.demo.service.JwtService
+import com.demo.services.JwtService
 import com.demo.domain.User
-import com.demo.service.UserService
+import com.demo.services.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

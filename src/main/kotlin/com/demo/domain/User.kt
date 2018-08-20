@@ -4,11 +4,10 @@ import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 
-// data class should not be used
-// https://stackoverflow.com/questions/35847763/kotlin-data-class-bean-validation-jsr-303
+// @get annotation is used to validate correctly the values
 
 @Entity
-class User(
+data class User(
         @Column(unique = true)
         @get:Email(message = "email not valid!")
         val email: String,
@@ -20,10 +19,10 @@ class User(
         var roles: MutableCollection<Role> = mutableListOf(), // todo
 
         @Id @GeneratedValue
-        val id: Long? = null)
+        val id: Long = 0)
 
 @Entity
-class Role(
+data class Role(
         @Column(unique = true)
         val name: String,
 

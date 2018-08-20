@@ -1,4 +1,4 @@
-package com.demo.service
+package com.demo.services
 
 import com.demo.domain.User
 import org.springframework.data.repository.CrudRepository

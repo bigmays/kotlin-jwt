@@ -1,9 +1,9 @@
-package com.demo.controller
+package com.demo.controllers
 
 import com.demo.config.WebConfig
 import com.demo.domain.User
-import com.demo.service.JwtService
-import com.demo.service.UserService
+import com.demo.services.JwtService
+import com.demo.services.UserService
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.given
@@ -35,10 +35,10 @@ internal class UserLoginTest {
         val builder = signUpRequestBuilder()
                 .content("{\"email\": \"test@gmail.com\", \"password\":\"123123\"}")
 
-        given(this.userService.findByEmailAndPassword("test@gmail.com", "123123"))
+        given(userService.findByEmailAndPassword("test@gmail.com", "123123"))
                 .willReturn(Optional.of(User("test@gmail.com", "123123")))
 
-        this.mockMvc.perform(builder).andExpect(status().isOk)
+        mockMvc.perform(builder).andExpect(status().isOk)
     }
 
     @Test
@@ -46,10 +46,10 @@ internal class UserLoginTest {
         val builder = signUpRequestBuilder()
                 .content("{\"email\": \"test@gmail.com\", \"password\":\"123123\"}")
 
-        given(this.userService.findByEmailAndPassword("test@gmail.com", "123123"))
+        given(userService.findByEmailAndPassword("test@gmail.com", "123123"))
                 .willReturn(Optional.empty())
 
-        this.mockMvc.perform(builder).andExpect(status().isUnauthorized)
+        mockMvc.perform(builder).andExpect(status().isUnauthorized)
 
     }
 

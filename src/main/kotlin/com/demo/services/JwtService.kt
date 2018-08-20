@@ -1,4 +1,4 @@
-package com.demo.service
+package com.demo.services
 
 import com.demo.domain.User
 import io.jsonwebtoken.Claims
@@ -19,7 +19,7 @@ class JwtService {
     @Value("\${jwt.expiration}")
     val expiration: Int = 600 // 10 minutes
 
-    val secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256)!! // todo not the best idea: what if the app reset?
+    val secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256)!! // todo change this
 
     fun create(user: User): String {
 
@@ -36,11 +36,11 @@ class JwtService {
                 .compact()
     }
 
-    fun getJwtClaims(jwt: String): Jws<Claims> {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(getJwtFromHeader(jwt))
+    fun getJwtClaims(authorizationHeader: String): Jws<Claims> {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(getJwtFromHeader(authorizationHeader))
     }
 
-    private fun getJwtFromHeader(jwtHeader: String) : String {
-        return jwtHeader.split(" ")[1] // todo better
+    private fun getJwtFromHeader(authorizationHeader: String) : String {
+        return authorizationHeader.split(" ")[1] // todo better
     }
 }
