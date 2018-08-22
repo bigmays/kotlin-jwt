@@ -1,7 +1,8 @@
 package com.demo.services
 
 import com.demo.domain.User
-import io.jsonwebtoken.JwtException
+import io.jsonwebtoken.MalformedJwtException
+import io.jsonwebtoken.security.SignatureException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,17 +19,26 @@ internal class JwtServiceTest {
     lateinit var jwtService: JwtService
 
     @Test
-    fun `Jwt not valid`() {
+    fun `Jwt not valid - signature exception`() {
         val jwt = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTM0Njg0NzEwLCJleHAiOjE1MzQ2ODUzMTAsIm5iZiI6MTUzNDY4NDcxMH0.jTMmXUb2m6UMtXljrbH6bf9U5jK56vOg_dzwSsV7leM"
 
-        assertFailsWith(JwtException::class) {
+        assertFailsWith(SignatureException::class) {
             jwtService.getJwtClaims(jwt)
         }
     }
 
+    @Test
+    fun `Jwt not valid - Missing Bearer`() {
+
+        val jwt = "Test eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTM0Njg0NzEwLCJleHAiOjE1MzQ2ODUzMTAsIm5iZiI6MTUzNDY4NDcxMH0.jTMmXUb2m6UMtXljrbH6bf9U5jK56vOg_dzwSsV7leM"
+
+        assertFailsWith(MalformedJwtException::class) {
+            jwtService.getJwtClaims(jwt)
+        }
+    }
 
     @Test
-    fun `create a valid Jwt`() {
+    fun `Jwt valid - creation and validation`() {
         val user = User("test@gmail.com", "123123")
 
         val jwtResult = jwtService.create(user)

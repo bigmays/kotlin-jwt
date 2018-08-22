@@ -4,26 +4,33 @@ import com.demo.domain.User
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.MalformedJwtException
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.util.*
+import javax.annotation.PostConstruct
+import javax.crypto.SecretKey
 
 @Service
 class JwtService {
 
-    @Value("\${jwt.secret}")
-    val secret: String = "mySecret"
-
     @Value("\${jwt.expiration}")
     val expiration: Int = 600 // 10 minutes
 
-    val secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256)!! // todo change this
+    @Value("\${jwt.secret}")
+    private val secret: String = ""
 
+    lateinit var secretKey: SecretKey
+
+    @PostConstruct
+    fun init() {
+        secretKey = Keys.hmacShaKeyFor(secret.toByteArray())
+    }
+
+    // consider using different jwt per different endpoint, each with his own secret key and exp time
     fun create(user: User): String {
 
-        // todo exp different per endpoint ?? in this case add field that define endpoint (encrypt)
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.SECOND, expiration)
 
@@ -40,7 +47,11 @@ class JwtService {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(getJwtFromHeader(authorizationHeader))
     }
 
-    private fun getJwtFromHeader(authorizationHeader: String) : String {
-        return authorizationHeader.split(" ")[1] // todo better
+    private fun getJwtFromHeader(authorizationHeader: String): String {
+        val jwt = authorizationHeader.split("Bearer ")
+        return if (jwt.size == 2)
+            jwt[1]
+        else
+            throw MalformedJwtException("Header is not a valid jwt!")
     }
 }
