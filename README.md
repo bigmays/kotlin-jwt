@@ -1,10 +1,19 @@
-A simple jwt project created with kotlin and spring boot 2. 
+A simple jwt project created with kotlin, spring boot 2 and docker
 
 Login, sign up and a test endpoint to test the jwt created
 
 Spring security is not used
 
-### Structure
+## How to run
+go to the project's root:
+    
+    docker-compose up
+    
+or simply
+    
+    ./gradlew bootRun
+
+## Structure
 
 - UserController: standard rest controller where you can login and sign-up
 - JwtService / UserService: contains logic for jwt and user management

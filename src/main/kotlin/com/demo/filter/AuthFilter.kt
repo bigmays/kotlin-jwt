@@ -18,6 +18,7 @@ class AuthFilter(val jwtService: JwtService) : HandlerInterceptor {
 
         return try {
             val authorizationHeader = request.getHeader("Authorization")
+                    ?: throw JwtException("Authorization header should not be null")
 
             // throws exceptions if the jwt is not valid
             jwtService.getJwtClaims(authorizationHeader)

@@ -1,0 +1,10 @@
+version: "3.3"
+
+services:
+  jwt_app:
+    image: kotest
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
