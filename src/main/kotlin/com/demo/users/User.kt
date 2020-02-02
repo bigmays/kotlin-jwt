@@ -1,4 +1,4 @@
-package com.demo.domain
+package com.demo.users
 
 import javax.persistence.*
 import javax.validation.constraints.Email

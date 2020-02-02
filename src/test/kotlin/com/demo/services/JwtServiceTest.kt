@@ -1,6 +1,7 @@
 package com.demo.services
 
-import com.demo.domain.User
+import com.demo.jwt.JwtService
+import com.demo.users.User
 import io.jsonwebtoken.MalformedJwtException
 import io.jsonwebtoken.security.SignatureException
 import org.junit.jupiter.api.Test

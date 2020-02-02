@@ -1,9 +1,10 @@
 package com.demo.controllers
 
 import com.demo.config.WebConfig
-import com.demo.domain.User
-import com.demo.services.JwtService
-import com.demo.services.UserService
+import com.demo.users.User
+import com.demo.jwt.JwtService
+import com.demo.users.UserController
+import com.demo.users.UserService
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.given

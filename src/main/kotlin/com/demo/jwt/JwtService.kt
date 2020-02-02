@@ -1,6 +1,6 @@
-package com.demo.services
+package com.demo.jwt
 
-import com.demo.domain.User
+import com.demo.users.User
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.Jwts

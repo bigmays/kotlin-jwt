@@ -1,11 +1,12 @@
-package com.demo.controllers
+package com.demo.users
 
-import com.demo.services.JwtService
-import com.demo.domain.User
-import com.demo.services.UserService
+import com.demo.jwt.JwtService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 @RestController
@@ -27,6 +28,7 @@ class UserController(val userService: UserService, val jwtService: JwtService) {
             ResponseEntity(HttpStatus.UNAUTHORIZED)
     }
 
+    // Example: To call this method you need a valid jwt
     @GetMapping("/test")
     fun test(): ResponseEntity<String> {
         return ResponseEntity.ok("Test ok")

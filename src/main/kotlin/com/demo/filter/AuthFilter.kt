@@ -1,6 +1,6 @@
 package com.demo.filter
 
-import com.demo.services.JwtService
+import com.demo.jwt.JwtService
 import io.jsonwebtoken.JwtException
 import org.slf4j.LoggerFactory
 import org.springframework.web.servlet.HandlerInterceptor
